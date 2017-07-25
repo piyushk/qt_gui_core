@@ -103,9 +103,13 @@ class MainWindow(DockableMainWindow):
             self._settings.set_value('geometry', self.saveGeometry())
             if maximized:
                 self.showMaximized()
+            self._settings.set_value("size", self.size())
 
     def _restore_geometry_from_perspective(self):
-        if self._settings.contains('geometry'):
+        if self._settings.contains('size'):
+            self.resize(self._settings.value("size"))
+            self.move(0, 0)
+        elif self._settings.contains('geometry'):
             self.restoreGeometry(self._settings.value('geometry'))
 
     def _save_state_to_perspective(self):
